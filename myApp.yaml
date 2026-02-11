@@ -1,18 +1,11 @@
 apiVersion: cnap.comcast.net/v1   
-# API group/version for Comcast CNAP custom resources
 kind: WebService                  
-# Resource kind: declares this is a web service managed by CNAP
 metadata:
   name: myApp                     
-  # Resource name (unique within the namespace)
   namespace: mySpace              
-  # Kubernetes/CNAP namespace where the resource will be created
 spec:
   source:
     git:
       url: "https://github.com/swilts000/MathFact.git"    
-      # Git repository URL containing the application
-      revision: "939bea1408b7f28aea3af141eca7a00bd1d99b53"  
-      # Specific commit SHA (or branch/tag) to deploy
-      subPath: "projects/music-app"                 
-      # Path inside the repo where the app's source lives
+      revision: "main"  
+      subPath: "App"                 
