@@ -1,8 +1,8 @@
 apiVersion: cnap.comcast.net/v1   
 kind: WebService                  
 metadata:
-  name: myApp                     
-  namespace: mySpace              
+  name: testing                     
+  namespace: todo              
 spec:
   source:
     git:
