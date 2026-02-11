@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "80:80"
+    # For development you can uncomment the volume below to mount your local files into the container
+    # volumes:
+    #   - ./:/usr/share/nginx/html:ro
+    restart: unless-stopped

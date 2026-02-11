@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Fact Invaders</title>
+    <!-- Load Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="CSS/styles.css">
+</head>
+<body class="bg-gray-100">
+
+    <!-- Mobile-First Responsive Container -->
+    <div class="w-full sm:max-w-lg md:max-w-xl lg:max-w-3xl p-4 sm:p-6 bg-white rounded-none sm:rounded-xl shadow-none sm:shadow-2xl space-y-4">
+
+        <!-- ===== Settings Screen ===== -->
+        <div id="settings-screen">
+            <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Math Fact Invaders</h1>
+            
+            <!-- Difficulty Options -->
+            <fieldset class="space-y-2">
+                <legend class="text-lg font-semibold text-gray-700">1. Select Difficulty:</legend>
+                <div class="flex flex-wrap gap-2 sm:gap-4">
+                    <label class="flex-1 min-w-[45%] p-4 border rounded-lg cursor-pointer has-[:checked]:bg-blue-50 has-[:checked]:border-blue-500">
+                        <input type="radio" name="difficulty" value="single" class="sr-only" checked>
+                        <span class="text-lg font-medium">Single Digit</span>
+                        <span class="text-gray-500 text-sm">(e.g., 7 × 5)</span>
+                    </label>
+                    <label class="flex-1 min-w-[45%] p-4 border rounded-lg cursor-pointer has-[:checked]:bg-blue-50 has-[:checked]:border-blue-500">
+                        <input type="radio" name="difficulty" value="double" class="sr-only">
+                        <span class="text-lg font-medium">Double Digit</span>
+                        <span class="text-gray-500 text-sm">(e.g., 12 × 8)</span>
+                    </label>
+                </div>
+            </fieldset>
+
+            <!-- Game Mode Options -->
+            <fieldset class="space-y-2">
+                <legend class="text-lg font-semibold text-gray-700">2. Select Game Mode:</legend>
+                <div class="flex flex-wrap gap-2 sm:gap-4">
+                    <label class="flex-1 min-w-[45%] p-4 border rounded-lg cursor-pointer has-[:checked]:bg-green-50 has-[:checked]:border-green-500">
+                        <input type="radio" name="mode" value="time" class="sr-only" checked>
+                        <span class="text-lg font-medium">Timed</span>
+                        <span class="text-gray-500 text-sm">Unlimited score in a time limit.</span>
+                    </label>
+                    <label class="flex-1 min-w-[45%] p-4 border rounded-lg cursor-pointer has-[:checked]:bg-green-50 has-[:checked]:border-green-500">
+                        <input type="radio" name="mode" value="score" class="sr-only">
+                        <span class="text-lg font-medium">Score Target</span>
+                        <span class="text-gray-500 text-sm">Unlimited time to reach a score.</span>
+                    </label>
+                </div>
+            </fieldset>
+            
+            <!-- Speed Options -->
+            <fieldset class="space-y-2">
+                <legend class="text-lg font-semibold text-gray-700">3. Select Speed:</legend>
+                <div class="flex gap-2 sm:gap-4">
+                    <label class="flex-1 p-3 sm:p-4 border rounded-lg cursor-pointer has-[:checked]:bg-yellow-50 has-[:checked]:border-yellow-500 text-center">
+                        <input type="radio" name="speed" value="easy" class="sr-only">
+                        <span class="text-lg font-medium">Easy</span>
+                    </label>
+                    <label class="flex-1 p-3 sm:p-4 border rounded-lg cursor-pointer has-[:checked]:bg-yellow-50 has-[:checked]:border-yellow-500 text-center">
+                        <input type="radio" name="speed" value="intermediate" class="sr-only" checked>
+                        <span class="text-lg font-medium">Intermediate</span>
+                    </label>
+                    <label class="flex-1 p-3 sm:p-4 border rounded-lg cursor-pointer has-[:checked]:bg-yellow-50 has-[:checked]:border-yellow-500 text-center">
+                        <input type="radio" name="speed" value="fast" class="sr-only">
+                        <span class="text-lg font-medium">Fast</span>
+                    </label>
+                </div>
+            </fieldset>
+
+            <!-- Multiplier Options -->
+            <fieldset class="space-y-2">
+                <legend class="text-lg font-semibold text-gray-700">4. Multiplier Focus (Center Number):</legend>
+                <div class="flex gap-2 sm:gap-4">
+                    <label class="flex-1 p-3 sm:p-4 border rounded-lg cursor-pointer has-[:checked]:bg-purple-50 has-[:checked]:border-purple-500 text-center">
+                        <input type="radio" name="multiplier_mode" value="random" class="sr-only" checked>
+                        <span class="text-lg font-medium">Random</span>
+                    </label>
+                    <label class="flex-1 p-3 sm:p-4 border rounded-lg cursor-pointer has-[:checked]:bg-purple-50 has-[:checked]:border-purple-500 text-center">
+                        <input type="radio" name="multiplier_mode" value="fixed" class="sr-only">
+                        <span class="text-lg font-medium">Fixed</span>
+                    </label>
+                </div>
+            </fieldset>
+
+            <!-- Fixed Multiplier Input (Conditional) -->
+            <div id="fixed-multiplier-container" style="display: none;">
+                <label for="fixed-multiplier" class="block text-lg font-semibold text-gray-700">Set Fixed Multiplier (1-12):</label>
+                <input type="number" id="fixed-multiplier" min="1" max="12" value="7" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none">
+            </div>
+            
+            <!-- Mode-Specific Inputs (Now Step 5) -->
+            <div class="space-y-4">
+                <div id="time-limit-container">
+                    <label for="time-limit" class="block text-lg font-semibold text-gray-700">5. Set Time Limit (seconds):</label>
+                    <input type="number" id="time-limit" value="60" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+                <div id="score-limit-container" style="display: none;">
+                    <label for="score-limit" class="block text-lg font-semibold text-gray-700">5. Set Score Target:</label>
+                    <input type="number" id="score-limit" value="20" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none">
+                </div>
+            </div>
+
+            <!-- Start Button -->
+            <button id="start-game" class="w-full bg-blue-600 text-white text-xl font-bold py-4 rounded-lg shadow-lg hover:bg-blue-700 transition-all duration-200 transform hover:-translate-y-0.5">
+                Start Game
+            </button>
+        </div>
+
+        <!-- ===== Game Screen (Initially Hidden) ===== -->
+        <div id="game-screen" style="display: none;" class="space-y-4">
+            
+            <!-- Scoreboard and Status -->
+            <div class="flex justify-between items-center bg-gray-100 p-3 sm:p-4 rounded-lg">
+                <div class="text-center">
+                    <span class="text-xs sm:text-sm font-medium text-gray-500">RIGHT</span>
+                    <p id="score-right" class="text-2xl sm:text-3xl font-bold text-green-600">0</p>
+                </div>
+                <div id="game-status" class="text-xl sm:text-2xl font-bold text-blue-600 text-center">
+                    Time: 60s
+                </div>
+                <div class="text-center">
+                    <span class="text-xs sm:text-sm font-medium text-gray-500">WRONG</span>
+                    <p id="score-wrong" class="text-2xl sm:text-3xl font-bold text-red-600">0</p>
+                </div>
+            </div>
+
+            <!-- Game Area -->
+            <div id="game-area" class="w-full relative">
+                <!-- Central multiplier number -->
+                <div id="multiplier">× 0</div>
+                
+                <!-- In-game alert message element -->
+                <div id="game-alert"></div>
+
+                <!-- Debug overlay (visible only during development) -->
+                <div id="debug-overlay" style="position:absolute;left:6px;top:6px;background:rgba(0,0,0,0.6);color:#fff;padding:6px 8px;border-radius:6px;font-size:12px;z-index:50;pointer-events:none;">debug</div>
+
+                <!-- Celebration overlay (hidden by default) -->
+                <div id="celebration-overlay" class="absolute inset-0 pointer-events-none" style="display: none;">
+                    <canvas id="celebration-canvas" class="w-full h-full"></canvas>
+                    <div id="celebration-text" class="absolute inset-0 flex items-center justify-center text-white" aria-hidden="true">
+                        YOU WIN!
+                    </div>
+                </div>
+
+                <!-- Invaders will be dynamically added here -->
+            </div>
+
+            <!-- Answer Display & Keypad -->
+            <div class="space-y-3">
+                <!-- Answer Display -->
+                <div id="answer-display" class="w-full p-3 h-14 sm:h-16 text-2xl sm:text-3xl text-right font-extrabold bg-gray-200 text-gray-800 rounded-lg border-2 border-gray-400 flex items-center justify-end pr-4">
+                    0
+                </div>
+
+                <!-- Keypad -->
+                <div id="keypad" class="grid grid-cols-3 gap-2 sm:gap-3">
+                    <button data-key="1" class="keypad-button">1</button>
+                    <button data-key="2" class="keypad-button">2</button>
+                    <button data-key="3" class="keypad-button">3</button>
+                    <button data-key="4" class="keypad-button">4</button>
+                    <button data-key="5" class="keypad-button">5</button>
+                    <button data-key="6" class="keypad-button">6</button>
+                    <button data-key="7" class="keypad-button">7</button>
+                    <button data-key="8" class="keypad-button">8</button>
+                    <button data-key="9" class="keypad-button">9</button>
+                    
+                    <!-- 0, Delete, Submit -->
+                    <button data-key="del" class="keypad-button bg-red-500 hover:bg-red-600 text-white text-lg">DEL</button>
+                    <button data-key="0" class="keypad-button">0</button>
+                    <button data-key="submit" class="keypad-button bg-green-500 hover:bg-green-600 text-white text-lg">✓ GO</button>
+                </div>
+            </div>
+            <!-- ===== END KEYPAD ===== -->
+
+        </div>
+
+        <!-- ===== Game Over Screen (Initially Hidden) ===== -->
+        <div id="game-over-screen" style="display: none; position: relative;" class="text-center space-y-6 p-8">
+            <h2 id="game-over-title" class="text-4xl font-bold text-gray-800">Game Over!</h2>
+            
+            <!-- Celebration overlay for Game Over / You Win (hidden by default) -->
+            <div id="celebration-overlay-gameover" class="absolute inset-0 pointer-events-none" style="display:none;">
+                <canvas id="celebration-canvas-gameover" class="w-full h-full"></canvas>
+                <div id="celebration-text-gameover" class="absolute inset-0 flex items-center justify-center text-white" aria-hidden="true">
+                    YOU WIN!
+                </div>
+            </div>
+
+            <div class="flex justify-around p-6 bg-gray-100 rounded-lg">
+                <div class="text-center">
+                    <span class="text-lg font-medium text-gray-600">Final Score (Right)</span>
+                    <p id="final-score-right" class="text-5xl font-bold text-green-600">0</p>
+                </div>
+                <div class="text-center">
+                    <span class="text-lg font-medium text-gray-600">Final Score (Wrong)</span>
+                    <p id="final-score-wrong" class="text-5xl font-bold text-red-600">0</p>
+                </div>
+            </div>
+            
+            <button id="restart-game" class="w-full bg-blue-600 text-white text-xl font-bold py-4 rounded-lg shadow-lg hover:bg-blue-700 transition-all duration-200 transform hover:-translate-y-0.5">
+                Play Again
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Load game script (external) -->
+    <script src="Javascript/script.js"></script>
+</body>
+</html>
