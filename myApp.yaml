@@ -2,7 +2,7 @@ apiVersion: cnap.comcast.net/v1
 kind: WebService                  
 metadata:
   name: testing                     
-  namespace: todo              
+  namespace: testing-todo              
 spec:
   source:
     git:
