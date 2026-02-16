@@ -7,5 +7,5 @@ spec:
   source:
     git:
       url: "https://github.com/swilts000/MathFact.git"    
-      revision: "main"  
+      revision: "6b6b9aded1837137e401663f0291a42426bbbc33"  
       subPath: "App"                 
